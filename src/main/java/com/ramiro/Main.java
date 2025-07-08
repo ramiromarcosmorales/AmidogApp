@@ -1,17 +1,21 @@
 package com.ramiro;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import com.ramiro.model.Perro;
+import com.ramiro.model.Propietario;
+import com.ramiro.model.Turno;
+
+import java.time.LocalDateTime;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        Propietario propietario = Propietario.crearPropietario(1, "Felipe");
+        Perro perro = Perro.crearPerro(1, "Matilda", 5, "Es muy inquieta!", propietario);
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        propietario.getPerros().add(perro);
+
+        LocalDateTime fechaHora = LocalDateTime.now();
+
+        Turno turno = Turno.crearTurno(1, fechaHora, propietario);
+        System.out.println(turno);
     }
 }
