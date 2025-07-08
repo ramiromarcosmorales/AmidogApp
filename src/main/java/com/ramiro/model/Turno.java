@@ -8,6 +8,9 @@ public class Turno {
     private Propietario propietario;
 
     private Turno(int id, LocalDateTime fechaHora, Propietario propietario) {
+        if (fechaHora.isBefore(LocalDateTime.now())) throw new IllegalArgumentException("La fecha no puede ser pasada");
+        if (propietario == null) throw new IllegalArgumentException("El propietario no puede ser nulo");
+
         this.id = id;
         this.fechaHora = fechaHora;
         this.propietario = propietario;
@@ -37,8 +40,9 @@ public class Turno {
         return propietario;
     }
 
-    public void setPropietario(Propietario propietario) {
-        this.propietario = propietario;
+    public void setPropietario(Propietario prop) {
+        if (prop == null) throw new IllegalArgumentException("El propietario no puede ser nulo");
+        this.propietario = prop;
     }
 
     @Override

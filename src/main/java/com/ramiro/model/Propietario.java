@@ -1,7 +1,7 @@
 package com.ramiro.model;
 
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Propietario {
@@ -10,6 +10,7 @@ public class Propietario {
     private List<Perro> perros = new ArrayList<Perro>();
 
     private Propietario(Integer id, String nombre) {
+        if (nombre == null || nombre.trim().isEmpty()) throw new IllegalArgumentException("Nombre no puede ser nulo o vacio");
         this.id = id;
         this.nombre = nombre;
     }
@@ -18,9 +19,8 @@ public class Propietario {
         return new Propietario(id, nombre);
     }
 
-    public void agregarPerro(Perro perro) {
-        perros.add(perro);
-        System.out.println("lo agregue");
+    public boolean agregarPerro(Perro perro) {
+        return perros.add(perro);
     }
 
     public Integer getId() {
@@ -36,15 +36,12 @@ public class Propietario {
     }
 
     public void setNombre(String nombre) {
+        if (nombre == null || nombre.trim().isEmpty()) throw new IllegalArgumentException("Nombre no puede ser nulo o vacio");
         this.nombre = nombre;
     }
 
     public List<Perro> getPerros() {
-        return perros;
-    }
-
-    public void setPerros(List<Perro> perros) {
-        this.perros = perros;
+        return Collections.unmodifiableList(perros);
     }
 
     @Override

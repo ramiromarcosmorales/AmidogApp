@@ -1,5 +1,7 @@
 package com.ramiro.model;
 
+import com.ramiro.utils.ValidacionUtils;
+
 public class Perro {
     private int id;
     private String nombre;
@@ -8,6 +10,11 @@ public class Perro {
     private Propietario propietario;
 
     private Perro(int id, String nombre, int edad, String descripcion, Propietario propietario) {
+        ValidacionUtils.validarTexto(nombre, "El nombre no puede ser nulo o vacio");
+        if (edad < 0 || edad > 30) throw new IllegalArgumentException("La edad razonable es entre 0 a 30");
+        ValidacionUtils.validarTexto(descripcion, "La descripcion no puede ser nulo o vacio");
+        if (propietario == null) throw new IllegalArgumentException("Propietario no puede ser nulo.");
+
         this.id = id;
         this.nombre = nombre;
         this.edad = edad;
@@ -23,15 +30,12 @@ public class Perro {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getNombre() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
+        ValidacionUtils.validarTexto(nombre, "El nombre no puede ser nulo o vacio");
         this.nombre = nombre;
     }
 
@@ -39,7 +43,12 @@ public class Perro {
         return edad;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setEdad(int edad) {
+        if (edad < 0 || edad > 30) throw new IllegalArgumentException("La edad razonable es entre 0 a 30");
         this.edad = edad;
     }
 
@@ -48,6 +57,7 @@ public class Perro {
     }
 
     public void setDescripcion(String descripcion) {
+        ValidacionUtils.validarTexto(descripcion, "La descripcion no puede ser nulo o vacio");
         this.descripcion = descripcion;
     }
 
