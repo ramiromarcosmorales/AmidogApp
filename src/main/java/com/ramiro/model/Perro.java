@@ -1,29 +1,40 @@
 package com.ramiro.model;
 
 import com.ramiro.utils.ValidacionUtils;
+import java.io.Serializable;
 
-public class Perro {
+import javax.persistence.*;
+
+@Entity
+public class Perro implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Basic
     private String nombre;
     private int edad;
     private String descripcion;
+    @ManyToOne
+    @JoinColumn(name = "propietario_id")
     private Propietario propietario;
 
-    private Perro(int id, String nombre, int edad, String descripcion, Propietario propietario) {
+    protected Perro() {
+    }
+
+    private Perro(String nombre, int edad, String descripcion, Propietario propietario) {
         ValidacionUtils.validarTexto(nombre, "El nombre no puede ser nulo o vacio");
         if (edad < 0 || edad > 30) throw new IllegalArgumentException("La edad razonable es entre 0 a 30");
         ValidacionUtils.validarTexto(descripcion, "La descripcion no puede ser nulo o vacio");
-        if (propietario == null) throw new IllegalArgumentException("Propietario no puede ser nulo.");
+        ValidacionUtils.validarObjeto(propietario, "El propietario no puede ser vacio");
 
-        this.id = id;
         this.nombre = nombre;
         this.edad = edad;
         this.descripcion = descripcion;
         this.propietario = propietario;
     }
 
-    public static Perro crearPerro(int id, String nombre, int edad, String descripcion, Propietario propietario) {
-        return new Perro(id, nombre, edad, descripcion, propietario);
+    public static Perro crearPerro(String nombre, int edad, String descripcion, Propietario propietario) {
+        return new Perro(nombre, edad, descripcion, propietario);
     }
 
     public int getId() {
@@ -66,6 +77,7 @@ public class Perro {
     }
 
     public void setPropietario(Propietario propietario) {
+        ValidacionUtils.validarObjeto(propietario, "El propietario no puede ser vacio");
         this.propietario = propietario;
     }
 

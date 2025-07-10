@@ -1,25 +1,38 @@
 package com.ramiro.model;
 
+import com.ramiro.utils.ValidacionUtils;
+import org.eclipse.persistence.annotations.PrimaryKey;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Entity
 public class Propietario {
+    @Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private Integer id;
+    @Basic
     private String nombre;
+    
+    @OneToMany(mappedBy="propietario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Perro> perros = new ArrayList<Perro>();
 
-    private Propietario(Integer id, String nombre) {
-        if (nombre == null || nombre.trim().isEmpty()) throw new IllegalArgumentException("Nombre no puede ser nulo o vacio");
-        this.id = id;
+    protected Propietario() {
+    }
+
+    private Propietario(String nombre) {
+        ValidacionUtils.validarTexto(nombre, "Nombre no puede ser nulo o vacio");
         this.nombre = nombre;
     }
 
-    public static Propietario crearPropietario(Integer id, String nombre) {
-        return new Propietario(id, nombre);
+    public static Propietario crearPropietario(String nombre) {
+        return new Propietario(nombre);
     }
 
     public boolean agregarPerro(Perro perro) {
+        ValidacionUtils.validarObjeto(perro, "El perro no puede ser nulo");
         return perros.add(perro);
     }
 
@@ -36,7 +49,7 @@ public class Propietario {
     }
 
     public void setNombre(String nombre) {
-        if (nombre == null || nombre.trim().isEmpty()) throw new IllegalArgumentException("Nombre no puede ser nulo o vacio");
+        ValidacionUtils.validarTexto(nombre, "Nombre no puede ser nulo o vacio");
         this.nombre = nombre;
     }
 

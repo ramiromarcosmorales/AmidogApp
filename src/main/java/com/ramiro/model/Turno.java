@@ -1,5 +1,7 @@
 package com.ramiro.model;
 
+import com.ramiro.utils.ValidacionUtils;
+
 import java.time.LocalDateTime;
 
 public class Turno {
@@ -8,8 +10,8 @@ public class Turno {
     private Propietario propietario;
 
     private Turno(int id, LocalDateTime fechaHora, Propietario propietario) {
-        if (fechaHora.isBefore(LocalDateTime.now())) throw new IllegalArgumentException("La fecha no puede ser pasada");
-        if (propietario == null) throw new IllegalArgumentException("El propietario no puede ser nulo");
+        ValidacionUtils.validarFecha(fechaHora, "La fecha no puede ser pasada");
+        ValidacionUtils.validarObjeto(propietario, "El propietario no puede ser nulo");
 
         this.id = id;
         this.fechaHora = fechaHora;
@@ -33,6 +35,7 @@ public class Turno {
     }
 
     public void setFechaHora(LocalDateTime fechaHora) {
+        ValidacionUtils.validarFecha(fechaHora, "La fecha no puede ser pasada");
         this.fechaHora = fechaHora;
     }
 
@@ -41,7 +44,7 @@ public class Turno {
     }
 
     public void setPropietario(Propietario prop) {
-        if (prop == null) throw new IllegalArgumentException("El propietario no puede ser nulo");
+        ValidacionUtils.validarObjeto(prop, "El propietario no puede ser nulo");
         this.propietario = prop;
     }
 

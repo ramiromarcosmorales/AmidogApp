@@ -2,24 +2,21 @@ package com.ramiro.controller;
 
 import com.ramiro.model.Perro;
 import com.ramiro.model.Propietario;
+import com.ramiro.utils.ValidacionUtils;
 
 public class PropietarioController {
-    private Propietario propietario;
-
-    public Propietario crearPropietario(Integer id, String nombre) {
-        Propietario prop = Propietario.crearPropietario(id, nombre);
-        this.propietario = prop;
-        return prop;
+    public Propietario crearPropietario(String nombre) {
+        return Propietario.crearPropietario(nombre);
     }
 
-    public boolean agregarPerro(Perro perro) {
-        if (perro == null) throw new IllegalArgumentException("El perro no puede ser nulo");
-        if (this.propietario == null) throw new IllegalArgumentException("El propietario no puede ser nulo");
-        return this.propietario.agregarPerro(perro);
+    public boolean agregarPerro(Perro perro, Propietario prop) {
+        ValidacionUtils.validarObjeto(perro, "El perro no puede ser nulo");
+        ValidacionUtils.validarObjeto(prop, "El propietario no puede ser nulo");
+        return prop.agregarPerro(perro);
     }
 
-    public Perro buscarPerro(int id) {
-        for (Perro perro : this.propietario.getPerros()) {
+    public Perro buscarPerro(int id, Propietario prop) {
+        for (Perro perro : prop.getPerros()) {
             if (perro.getId() == id) {
                 return perro;
             }
