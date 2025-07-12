@@ -62,6 +62,7 @@ public class Propietario {
         return "Propietario{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
+//                ", perros=" + (perros != null ? perros.size() + " perros" : "null") +
                 ", perros=" + perros +
                 '}';
     }

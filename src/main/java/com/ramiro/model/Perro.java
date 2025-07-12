@@ -79,6 +79,7 @@ public class Perro implements Serializable {
     public void setPropietario(Propietario propietario) {
         ValidacionUtils.validarObjeto(propietario, "El propietario no puede ser vacio");
         this.propietario = propietario;
+        propietario.agregarPerro(this);
     }
 
     @Override
