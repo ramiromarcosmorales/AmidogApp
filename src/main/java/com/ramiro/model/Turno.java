@@ -2,24 +2,32 @@ package com.ramiro.model;
 
 import com.ramiro.utils.ValidacionUtils;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
 public class Turno {
+    @Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private int id;
+    @Basic
     private LocalDateTime fechaHora;
+    @ManyToOne
+    @JoinColumn(name = "propietario_id", nullable = false)
     private Propietario propietario;
 
-    private Turno(int id, LocalDateTime fechaHora, Propietario propietario) {
+    protected Turno() {}
+
+    private Turno(LocalDateTime fechaHora, Propietario propietario) {
         ValidacionUtils.validarFecha(fechaHora, "La fecha no puede ser pasada");
         ValidacionUtils.validarObjeto(propietario, "El propietario no puede ser nulo");
 
-        this.id = id;
         this.fechaHora = fechaHora;
         this.propietario = propietario;
     }
 
-    public static Turno crearTurno(int id, LocalDateTime fecha, Propietario propietario) {
-        return new Turno(id, fecha, propietario);
+    public static Turno crearTurno(LocalDateTime fecha, Propietario propietario) {
+        return new Turno(fecha, propietario);
     }
 
     public int getId() {
@@ -53,7 +61,6 @@ public class Turno {
         return "Turno{" +
                 "id=" + id +
                 ", fechaHora=" + fechaHora +
-                ", propietario=" + propietario +
                 '}';
     }
 }

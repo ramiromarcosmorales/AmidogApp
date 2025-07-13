@@ -2,14 +2,17 @@ package com.ramiro.controller;
 
 import com.ramiro.model.Perro;
 import com.ramiro.model.Propietario;
+import com.ramiro.model.Turno;
 import com.ramiro.persistence.PerroJpaController;
 import com.ramiro.persistence.PropietarioJpaController;
+import com.ramiro.persistence.TurnoJpaController;
 
 import java.util.List;
 
 public class PersistenciaController {
     private final PropietarioJpaController propietarioJpaController = new PropietarioJpaController();
     private final PerroJpaController perroJpaController = new PerroJpaController();
+    private final TurnoJpaController turnoJpaController = new TurnoJpaController();
 
     // Metodos de Propietario
     public void crearPropietario(Propietario propietario) {
@@ -51,5 +54,26 @@ public class PersistenciaController {
 
     public void eliminarPerro(int id) {
         perroJpaController.destroy(id);
+    }
+
+    // Metodo de Turno
+    public void crearTurno(Turno turno) {
+        turnoJpaController.create(turno);
+    }
+
+    public Turno obtenerTurno(int id) {
+        return turnoJpaController.findTurno(id);
+    }
+
+    public List<Turno> obtenerTurnos() {
+        return turnoJpaController.findTurnoEntities();
+    }
+
+    public void editarTurno(Turno turno) {
+        turnoJpaController.edit(turno);
+    }
+
+    public void eliminarTurno(int id) {
+        turnoJpaController.destroy(id);
     }
 }

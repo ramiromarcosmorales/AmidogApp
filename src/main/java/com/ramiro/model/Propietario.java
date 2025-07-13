@@ -15,9 +15,10 @@ public class Propietario {
     private Integer id;
     @Basic
     private String nombre;
-    
     @OneToMany(mappedBy="propietario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Perro> perros = new ArrayList<Perro>();
+    @OneToMany(mappedBy="propietario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Turno> turnos = new ArrayList<>();
 
     protected Propietario() {
     }
@@ -34,6 +35,11 @@ public class Propietario {
     public boolean agregarPerro(Perro perro) {
         ValidacionUtils.validarObjeto(perro, "El perro no puede ser nulo");
         return perros.add(perro);
+    }
+
+    public boolean agregarTurno(Turno turno) {
+        ValidacionUtils.validarObjeto(turno, "El turno no puede ser nulo");
+        return turnos.add(turno);
     }
 
     public Integer getId() {
@@ -57,6 +63,10 @@ public class Propietario {
         return Collections.unmodifiableList(perros);
     }
 
+    public List<Turno> getTurnos() {
+        return turnos;
+    }
+
     @Override
     public String toString() {
         return "Propietario{" +
@@ -64,6 +74,7 @@ public class Propietario {
                 ", nombre='" + nombre + '\'' +
 //                ", perros=" + (perros != null ? perros.size() + " perros" : "null") +
                 ", perros=" + perros +
+                ", turnos=" + turnos +
                 '}';
     }
 }

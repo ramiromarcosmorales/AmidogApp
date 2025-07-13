@@ -1,18 +1,17 @@
 package com.ramiro.persistence;
 
-import com.ramiro.model.Perro;
+import com.ramiro.model.Turno;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
-import java.io.Serializable;
 import java.util.List;
 
-public class PerroJpaController implements Serializable {
+public class TurnoJpaController {
     private EntityManagerFactory emf = null;
 
-    public PerroJpaController() {
+    public TurnoJpaController() {
         this.emf = Persistence.createEntityManagerFactory("AmidogPU");
     }
 
@@ -20,24 +19,24 @@ public class PerroJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Perro perro) {
+    public void create(Turno turno) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(perro);
+            em.persist(turno);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
     }
 
-    public void edit(Perro perro) {
+    public void edit(Turno turno) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.merge(perro);
+            em.merge(turno);
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -49,9 +48,9 @@ public class PerroJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Perro perro = em.find(Perro.class, id);
-            if (perro != null) {
-                em.remove(perro);
+            Turno turno = em.find(Turno.class, id);
+            if (turno != null) {
+                em.remove(turno);
             }
             em.getTransaction().commit();
         } finally {
@@ -59,21 +58,21 @@ public class PerroJpaController implements Serializable {
         }
     }
 
-    public Perro findPerro(int id) {
+    public Turno findTurno(int id) {
         EntityManager em = null;
         try {
             em = getEntityManager();
-            return em.find(Perro.class, id);
+            return em.find(Turno.class, id);
         } finally {
             em.close();
         }
     }
 
-    public List<Perro> findPerroEntities() {
-        EntityManager em = null;
+    public List<Turno> findTurnoEntities() {
+        EntityManager em = getEntityManager();
         try {
             em = getEntityManager();
-            TypedQuery<Perro> query = em.createQuery("select p from Perro p", Perro.class);
+            TypedQuery<Turno> query = em.createQuery("SELECT t FROM Turno t", Turno.class);
             return query.getResultList();
         } finally {
             em.close();

@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 public class TurnoController {
 
-    public Turno registrarTurno(int id, LocalDateTime fechaHora, Propietario propietario) {
-        return Turno.crearTurno(id, fechaHora, propietario);
+    public Turno registrarTurno(LocalDateTime fechaHora, Propietario propietario) {
+        return Turno.crearTurno(fechaHora, propietario);
     }
 }

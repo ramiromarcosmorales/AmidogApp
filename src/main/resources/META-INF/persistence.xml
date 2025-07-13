@@ -4,6 +4,7 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>com.ramiro.model.Perro</class>
     <class>com.ramiro.model.Propietario</class>
+    <class>com.ramiro.model.Turno</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:8889/Amidog?serverTimezone=UTC"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
