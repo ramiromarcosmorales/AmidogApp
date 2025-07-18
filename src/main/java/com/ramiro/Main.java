@@ -20,6 +20,5 @@ public class Main {
         PropietarioController propietarioController = new PropietarioController();
         PerroController perroController = new PerroController();
         TurnoController turnoController = new TurnoController();
-
     }
 }

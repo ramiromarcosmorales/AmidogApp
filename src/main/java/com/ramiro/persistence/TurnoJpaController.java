@@ -27,7 +27,7 @@ public class TurnoJpaController {
             em.persist(turno);
             em.getTransaction().commit();
         } finally {
-            em.close();
+            if (em != null) em.close();
         }
     }
 
@@ -39,7 +39,7 @@ public class TurnoJpaController {
             em.merge(turno);
             em.getTransaction().commit();
         } finally {
-            em.close();
+            if (em != null) em.close();
         }
     }
 
@@ -54,7 +54,7 @@ public class TurnoJpaController {
             }
             em.getTransaction().commit();
         } finally {
-            em.close();
+            if (em != null) em.close();
         }
     }
 
@@ -64,18 +64,18 @@ public class TurnoJpaController {
             em = getEntityManager();
             return em.find(Turno.class, id);
         } finally {
-            em.close();
+            if (em != null) em.close();
         }
     }
 
     public List<Turno> findTurnoEntities() {
-        EntityManager em = getEntityManager();
+        EntityManager em = null;
         try {
             em = getEntityManager();
             TypedQuery<Turno> query = em.createQuery("SELECT t FROM Turno t", Turno.class);
             return query.getResultList();
         } finally {
-            em.close();
+            if (em != null) em.close();
         }
     }
 }
