@@ -28,7 +28,7 @@ public class PropietarioJpaController implements Serializable {
             em.persist(propietario);
             em.getTransaction().commit();
         } finally {
-            em.close();
+            if (em != null) em.close();
         }
     }
 
@@ -40,7 +40,7 @@ public class PropietarioJpaController implements Serializable {
             em.merge(propietario);
             em.getTransaction().commit();
         } finally {
-            em.close();
+            if (em != null) em.close();
         }
     }
 
@@ -55,7 +55,7 @@ public class PropietarioJpaController implements Serializable {
             }
             em.getTransaction().commit();
         } finally {
-            em.close();
+            if (em != null) em.close();
         }
     }
 
@@ -65,7 +65,7 @@ public class PropietarioJpaController implements Serializable {
             em = getEntityManager();
             return em.find(Propietario.class, id);
         } finally {
-            em.close();
+            if (em != null) em.close();
         }
     }
 
@@ -76,7 +76,7 @@ public class PropietarioJpaController implements Serializable {
             TypedQuery<Propietario> query = em.createQuery("SELECT p FROM Propietario p", Propietario.class);
             return query.getResultList();
         } finally {
-            em.close();
+            if (em != null) em.close();
         }
     }
 }

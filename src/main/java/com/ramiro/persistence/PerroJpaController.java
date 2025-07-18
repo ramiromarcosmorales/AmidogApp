@@ -28,7 +28,7 @@ public class PerroJpaController implements Serializable {
             em.persist(perro);
             em.getTransaction().commit();
         } finally {
-            em.close();
+            if (em != null) em.close();
         }
     }
 
@@ -40,7 +40,7 @@ public class PerroJpaController implements Serializable {
             em.merge(perro);
             em.getTransaction().commit();
         } finally {
-            em.close();
+            if (em != null) em.close();
         }
     }
 
@@ -50,12 +50,10 @@ public class PerroJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Perro perro = em.find(Perro.class, id);
-            if (perro != null) {
-                em.remove(perro);
-            }
+            if (perro != null) em.remove(perro);
             em.getTransaction().commit();
         } finally {
-            em.close();
+            if (em != null) em.close();
         }
     }
 
@@ -65,7 +63,7 @@ public class PerroJpaController implements Serializable {
             em = getEntityManager();
             return em.find(Perro.class, id);
         } finally {
-            em.close();
+            if (em != null) em.close();
         }
     }
 
@@ -76,7 +74,7 @@ public class PerroJpaController implements Serializable {
             TypedQuery<Perro> query = em.createQuery("select p from Perro p", Perro.class);
             return query.getResultList();
         } finally {
-            em.close();
+            if (em != null) em.close();
         }
     }
 }
