@@ -1,8 +1,5 @@
 package com.ramiro.model;
 
-import com.ramiro.utils.ValidacionUtils;
-import org.eclipse.persistence.annotations.PrimaryKey;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,7 +21,6 @@ public class Propietario {
     }
 
     private Propietario(String nombre) {
-        ValidacionUtils.validarTexto(nombre, "Nombre no puede ser nulo o vacio");
         this.nombre = nombre;
     }
 
@@ -33,12 +29,10 @@ public class Propietario {
     }
 
     public boolean agregarPerro(Perro perro) {
-        ValidacionUtils.validarObjeto(perro, "El perro no puede ser nulo");
         return perros.add(perro);
     }
 
     public boolean agregarTurno(Turno turno) {
-        ValidacionUtils.validarObjeto(turno, "El turno no puede ser nulo");
         return turnos.add(turno);
     }
 
@@ -55,7 +49,6 @@ public class Propietario {
     }
 
     public void setNombre(String nombre) {
-        ValidacionUtils.validarTexto(nombre, "Nombre no puede ser nulo o vacio");
         this.nombre = nombre;
     }
 

@@ -22,11 +22,6 @@ public class Perro implements Serializable {
     }
 
     private Perro(String nombre, int edad, String descripcion, Propietario propietario) {
-        ValidacionUtils.validarTexto(nombre, "El nombre no puede ser nulo o vacio");
-        if (edad < 0 || edad > 30) throw new IllegalArgumentException("La edad razonable es entre 0 a 30");
-        ValidacionUtils.validarTexto(descripcion, "La descripcion no puede ser nulo o vacio");
-        ValidacionUtils.validarObjeto(propietario, "El propietario no puede ser vacio");
-
         this.nombre = nombre;
         this.edad = edad;
         this.descripcion = descripcion;
@@ -46,7 +41,6 @@ public class Perro implements Serializable {
     }
 
     public void setNombre(String nombre) {
-        ValidacionUtils.validarTexto(nombre, "El nombre no puede ser nulo o vacio");
         this.nombre = nombre;
     }
 
@@ -59,7 +53,6 @@ public class Perro implements Serializable {
     }
 
     public void setEdad(int edad) {
-        if (edad < 0 || edad > 30) throw new IllegalArgumentException("La edad razonable es entre 0 a 30");
         this.edad = edad;
     }
 
@@ -68,7 +61,6 @@ public class Perro implements Serializable {
     }
 
     public void setDescripcion(String descripcion) {
-        ValidacionUtils.validarTexto(descripcion, "La descripcion no puede ser nulo o vacio");
         this.descripcion = descripcion;
     }
 
@@ -77,7 +69,6 @@ public class Perro implements Serializable {
     }
 
     public void setPropietario(Propietario propietario) {
-        ValidacionUtils.validarObjeto(propietario, "El propietario no puede ser vacio");
         this.propietario = propietario;
         propietario.agregarPerro(this);
     }

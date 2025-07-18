@@ -16,4 +16,10 @@ public class ValidacionUtils {
     public static void validarFecha(LocalDateTime fechaHora, String mensajeError) {
         if (fechaHora.isBefore(LocalDateTime.now())) throw new IllegalArgumentException(mensajeError);
     }
+
+    public static void validarId(int id, String mensajeError) {
+        if (id <= 0) throw new IllegalArgumentException(mensajeError);
+    }
+
+
 }

@@ -16,9 +16,14 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        PersistenciaController persistenciaController = new PersistenciaController();
-        PropietarioController propietarioController = new PropietarioController();
-        PerroController perroController = new PerroController();
-        TurnoController turnoController = new TurnoController();
+        PersistenciaController persistencia = new PersistenciaController();
+
+        PropietarioController propietarioController = new PropietarioController(persistencia);
+        PerroController perroController = new PerroController(persistencia);
+        TurnoController turnoController = new TurnoController(persistencia);
+
+        List<Perro> perritos = perroController.obtenerPerros();
+
+        perritos.forEach(System.out::println);
     }
 }
