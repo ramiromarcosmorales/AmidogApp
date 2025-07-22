@@ -77,4 +77,16 @@ public class PerroJpaController implements Serializable {
             if (em != null) em.close();
         }
     }
+
+    public void deleteAll() {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.createQuery("DELETE FROM Perro").executeUpdate();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) em.close();
+        }
+    }
 }

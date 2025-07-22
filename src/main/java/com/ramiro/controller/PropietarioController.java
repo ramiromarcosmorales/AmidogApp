@@ -59,4 +59,8 @@ public class PropietarioController {
         }
         return null;
     }
+
+    public void borrarPropietarios() {
+        persistencia.borrarPropietarios();
+    }
 }

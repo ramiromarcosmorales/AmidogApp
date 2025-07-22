@@ -35,6 +35,10 @@ public class PersistenciaController {
         propietarioJpaController.destroy(id);
     }
 
+    public void borrarPropietarios() {
+        propietarioJpaController.deleteAll();
+    }
+
     // Metodos de Perro
     public void crearPerro(Perro perro) {
         perroJpaController.create(perro);
@@ -54,6 +58,10 @@ public class PersistenciaController {
 
     public void eliminarPerro(int id) {
         perroJpaController.destroy(id);
+    }
+
+    public void borrarPerros() {
+        perroJpaController.deleteAll();
     }
 
     // Metodo de Turno

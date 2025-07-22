@@ -43,4 +43,8 @@ public class PerroController {
         ValidacionUtils.validarObjeto(perro, "Perro null");
         persistencia.editarPerro(perro);
     }
+
+    public void eliminarPerros() {
+        persistencia.borrarPerros();
+    }
 }

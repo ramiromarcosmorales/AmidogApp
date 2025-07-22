@@ -22,8 +22,6 @@ public class Main {
         PerroController perroController = new PerroController(persistencia);
         TurnoController turnoController = new TurnoController(persistencia);
 
-        List<Perro> perritos = perroController.obtenerPerros();
 
-        perritos.forEach(System.out::println);
     }
 }
