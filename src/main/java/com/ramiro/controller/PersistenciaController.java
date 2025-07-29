@@ -84,4 +84,8 @@ public class PersistenciaController {
     public void eliminarTurno(int id) {
         turnoJpaController.destroy(id);
     }
+
+    public void borrarTurnos() {
+        turnoJpaController.deleteAll();
+    }
 }

@@ -39,4 +39,8 @@ public class TurnoController {
         ValidacionUtils.validarId(id, "ID invalido, debe ser mayor que 0");
         persistencia.eliminarTurno(id);
     }
+
+    public void eliminarTurnos() {
+        persistencia.borrarTurnos();
+    }
 }

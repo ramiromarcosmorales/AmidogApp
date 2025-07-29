@@ -78,4 +78,18 @@ public class TurnoJpaController {
             if (em != null) em.close();
         }
     }
+
+    public void deleteAll() {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.createQuery("DELETE FROM Perro").executeUpdate();
+            em.createQuery("DELETE FROM Turno").executeUpdate();
+            em.createQuery("DELETE FROM Propietario").executeUpdate();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) em.close();
+        }
+    }
 }
