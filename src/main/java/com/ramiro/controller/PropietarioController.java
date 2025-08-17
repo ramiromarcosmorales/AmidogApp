@@ -5,13 +5,13 @@ import com.ramiro.model.Propietario;
 import com.ramiro.utils.ValidacionUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 public class PropietarioController {
     private final PersistenciaController persistencia;
 
     public PropietarioController(PersistenciaController persistencia) {
         ValidacionUtils.validarObjeto(persistencia, "Persistencia null");
-
         this.persistencia = persistencia;
     }
 
@@ -52,12 +52,29 @@ public class PropietarioController {
         ValidacionUtils.validarId(id, "ID invalido, debe ser mayor que 0");
         ValidacionUtils.validarObjeto(prop, "Propietario null");
 
-        for (Perro perro : prop.getPerros()) {
-            if (perro.getId() == id) {
-                return perro;
-            }
-        }
-        return null;
+        return prop.getPerros().stream()
+                .filter(p -> p.getId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Perro buscarPerroPorNombre(String nombre, Propietario prop) {
+        ValidacionUtils.validarTexto(nombre, "Nombre incompleto");
+        ValidacionUtils.validarObjeto(prop, "Propietario null");
+
+        return prop.getPerros().stream()
+                .filter(p -> p.getNombre().equalsIgnoreCase(nombre))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public List<Perro> buscarPerrosPorEdad(int edad, Propietario prop) {
+        // crear validacion para edad
+        ValidacionUtils.validarObjeto(prop, "Propietario null");
+
+        return prop.getPerros().stream()
+                .filter(p -> p.getEdad() >= edad)
+                .toList();
     }
 
     public void borrarPropietarios() {

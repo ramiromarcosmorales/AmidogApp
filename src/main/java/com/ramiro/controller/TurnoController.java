@@ -35,6 +35,18 @@ public class TurnoController {
         return persistencia.obtenerTurnos();
     }
 
+    public List<Turno> obtenerTurnosActivos() {
+        return persistencia.obtenerTurnos().stream()
+                .filter(t -> t.getFechaHora().isAfter(LocalDateTime.now()))
+                .toList();
+    }
+
+    public List<Turno> obtenerTurnosInactivos() {
+        return persistencia.obtenerTurnos().stream()
+                .filter(t -> t.getFechaHora().isBefore(LocalDateTime.now()))
+                .toList();
+    }
+
     public void eliminarTurno(int id) {
         ValidacionUtils.validarId(id, "ID invalido, debe ser mayor que 0");
         persistencia.eliminarTurno(id);
