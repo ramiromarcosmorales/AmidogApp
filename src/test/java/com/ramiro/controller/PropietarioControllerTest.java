@@ -15,6 +15,9 @@ class PropietarioControllerTest {
     @BeforeEach
     void setUp() {
         persistencia = new PersistenciaController();
+        persistencia.borrarTurnos();
+        persistencia.borrarPerros();
+        persistencia.borrarPropietarios();
         propietarioController = new PropietarioController(persistencia);
     }
 
@@ -34,6 +37,7 @@ class PropietarioControllerTest {
         List<Propietario> propietarios = propietarioController.buscarPropietarios();
 
         assertEquals(1, propietarios.size());
+
         assertEquals("Ramiro", propietarios.getFirst().getNombre());
     }
 
@@ -67,10 +71,8 @@ class PropietarioControllerTest {
 
         propietarioController.editarPropietario(prop);
 
-
-        prop = propietarioController.buscarPropietarios().getFirst();
-
-        assertEquals("Bautista", prop.getNombre(), "Error al editar propietario");
+        assertTrue(propietarioController.buscarPropietarios().stream()
+                .anyMatch(p -> p.getNombre().equals("Bautista")), "Error al editar propietario");
     }
 
     @Test
@@ -87,32 +89,12 @@ class PropietarioControllerTest {
     @Test
     void agregarPerro() {
         PerroController perroController = new PerroController(persistencia);
-
         propietarioController.crearPropietario("Ramiro");
+        Propietario prop = propietarioController.buscarPropietarios().getFirst();
+        perroController.crearPerro("Matilda", 8, "juguetona y dormilona", prop);
 
-        Propietario prop = propietarioController.buscarPropietarios().get(0);
-        perroController.crearPerro("Matilda", 8, "Es feliz", prop);
-        Perro perro = perroController.obtenerPerros().getFirst();
-
-        propietarioController.agregarPerro(perro, prop);
-
-        prop = propietarioController.buscarPropietarios().getFirst();
-
-        prop.getPerros().size();
-        System.out.println(prop);
-
-        List<Perro> perros = prop.getPerros();
-
-        System.out.println(perros.size());
-        System.out.println(perros.isEmpty());
+        prop = propietarioController.buscarPropietarioConPerros(prop.getId());
+        assertTrue(prop.getPerros().stream()
+                .anyMatch(p -> p.getNombre().equals("Matilda")), "Error al agregar Perro a Propietario");
     }
-
-    /*
-
-
-    @Test
-//    void buscarPerro() {
-//    }
-
-    */
 }

@@ -19,10 +19,14 @@ class PerroControllerTest {
     @BeforeEach
     void setUp() {
         persistencia = new PersistenciaController();
+        persistencia.borrarTurnos();
+        persistencia.borrarPerros();
+        persistencia.borrarPropietarios();
         perroController = new PerroController(persistencia);
         propietarioController = new PropietarioController(persistencia);
         propietarioController.crearPropietario("Rama");
         prop = propietarioController.buscarPropietarios().getFirst();
+
     }
 
     @AfterEach
@@ -37,11 +41,10 @@ class PerroControllerTest {
     @Test
     void crearPerro() {
         perroController.crearPerro("Matilda", 8, "Es feliz y dormilona", prop);
-
-        List<Perro> perros = perroController.obtenerPerros();
-
-        assertEquals(1, perros.size());
-        assertEquals("Matilda", perros.getFirst().getNombre());
+        prop = propietarioController.buscarPropietarioConPerros(prop.getId());
+        assertNotNull(prop);
+        assertEquals(1, prop.getPerros().size());
+        assertTrue(prop.getPerros().stream().anyMatch(p -> p.getNombre().equals("Matilda")));
     }
 
     @Test

@@ -26,7 +26,7 @@ public class TurnoController {
         persistencia.editarTurno(turno);
     }
 
-    public Turno obtenerTurno(int id) {
+    public Turno obtenerTurno(Integer id) {
         ValidacionUtils.validarId(id, "ID invalido, debe ser mayor que 0");
         return persistencia.obtenerTurno(id);
     }

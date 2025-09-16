@@ -9,14 +9,8 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class TurnoJpaController {
-    private EntityManagerFactory emf = null;
-
-    public TurnoJpaController() {
-        this.emf = Persistence.createEntityManagerFactory("AmidogPU");
-    }
-
     public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+        return JpaUtil.getEntityManager();
     }
 
     public void create(Turno turno) {

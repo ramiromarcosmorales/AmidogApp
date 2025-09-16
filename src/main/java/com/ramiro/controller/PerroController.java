@@ -17,9 +17,9 @@ public class PerroController {
 
     public void crearPerro(String nombre, int edad, String descripcion, Propietario propietario) {
         ValidacionUtils.validarTexto(nombre, "Nombre incompleto");
-        if (edad < 0 || edad > 30) throw new IllegalArgumentException("Edad invalida");
+        ValidacionUtils.validarEdad(edad, "Edad inválida o null");
         ValidacionUtils.validarTexto(descripcion, "Descripcion incompleta");
-        ValidacionUtils.validarObjeto(propietario, "Propietario incompleto");
+//        ValidacionUtils.validarObjeto(propietario, "Propietario incompleto");
 
         Perro perro = Perro.crearPerro(nombre, edad, descripcion, propietario);
         persistencia.crearPerro(perro);

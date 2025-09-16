@@ -6,8 +6,8 @@ import java.time.LocalDateTime;
 @Entity
 public class Turno {
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
-    private int id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Integer id;
     @Basic
     private LocalDateTime fechaHora;
     @ManyToOne
@@ -25,11 +25,11 @@ public class Turno {
         return new Turno(fecha, propietario);
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

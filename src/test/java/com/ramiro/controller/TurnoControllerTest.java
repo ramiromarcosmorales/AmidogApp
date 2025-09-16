@@ -12,15 +12,18 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TurnoControllerTest {
-    PersistenciaController controlador;
+    PersistenciaController persistencia;
     TurnoController turnoController;
     PropietarioController propController;
 
     @BeforeEach
     void setup() {
-        controlador = new PersistenciaController();
-        turnoController = new TurnoController(controlador);
-        propController = new PropietarioController(controlador);
+        persistencia = new PersistenciaController();
+        persistencia.borrarTurnos();
+        persistencia.borrarPerros();
+        persistencia.borrarPropietarios();
+        turnoController = new TurnoController(persistencia);
+        propController = new PropietarioController(persistencia);
     }
 
     @AfterEach

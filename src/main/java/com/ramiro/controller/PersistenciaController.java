@@ -39,6 +39,10 @@ public class PersistenciaController {
         propietarioJpaController.deleteAll();
     }
 
+    public Propietario buscarPropietarioConPerros(int id) {
+        return propietarioJpaController.findPropietarioConPerros(id);
+    }
+
     // Metodos de Perro
     public void crearPerro(Perro perro) {
         perroJpaController.create(perro);

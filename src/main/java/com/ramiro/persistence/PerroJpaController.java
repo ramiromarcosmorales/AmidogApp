@@ -1,6 +1,7 @@
 package com.ramiro.persistence;
 
 import com.ramiro.model.Perro;
+import com.ramiro.model.Propietario;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -10,14 +11,9 @@ import java.io.Serializable;
 import java.util.List;
 
 public class PerroJpaController implements Serializable {
-    private EntityManagerFactory emf = null;
-
-    public PerroJpaController() {
-        this.emf = Persistence.createEntityManagerFactory("AmidogPU");
-    }
 
     public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+        return JpaUtil.getEntityManager();
     }
 
     public void create(Perro perro) {
@@ -25,6 +21,15 @@ public class PerroJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+
+            if (perro.getPropietario() != null) {
+                int propId = perro.getPropietario().getId();
+                Propietario prop = em.getReference(Propietario.class, propId);
+                perro.setPropietario(prop);
+            } else {
+                throw new IllegalArgumentException("Perro debe tener un propietario!");
+            }
+
             em.persist(perro);
             em.getTransaction().commit();
         } finally {

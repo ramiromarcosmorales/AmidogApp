@@ -8,11 +8,12 @@ import java.util.List;
 @Entity
 public class Propietario {
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
     @Basic
     private String nombre;
     @OneToMany(mappedBy="propietario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("id ASC")
     private List<Perro> perros = new ArrayList<Perro>();
     @OneToMany(mappedBy="propietario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Turno> turnos = new ArrayList<>();
@@ -28,8 +29,23 @@ public class Propietario {
         return new Propietario(nombre);
     }
 
-    public boolean agregarPerro(Perro perro) {
-        return perros.add(perro);
+    public void agregarPerro(Perro perro) {
+        if (perro == null) return;
+        if (perro.getPropietario() != this) {
+            perro.setPropietario(this);
+        } else if (!perros.contains(perro)) {
+            perros.add(perro);
+        }
+    }
+
+    public void eliminarPerro(Perro perro) {
+        if (perro == null) return;
+
+        if (perro.getPropietario() == this) {
+            perro.setPropietario(null);
+        } else {
+            perros.remove(perro);
+        }
     }
 
     public boolean agregarTurno(Turno turno) {
@@ -56,6 +72,10 @@ public class Propietario {
         return Collections.unmodifiableList(perros);
     }
 
+    List<Perro> getPerrosInternal() {
+        return perros;
+    }
+
     public List<Turno> getTurnos() {
         return turnos;
     }
@@ -65,9 +85,8 @@ public class Propietario {
         return "Propietario{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
-//                ", perros=" + (perros != null ? perros.size() + " perros" : "null") +
-                ", perros=" + perros +
-                ", turnos=" + turnos +
+                ", perros=" + (perros != null ? perros.size() : 0) +
+                ", turnos=" + (turnos != null ? turnos.size() : 0) +
                 '}';
     }
 }

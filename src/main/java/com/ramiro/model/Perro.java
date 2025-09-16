@@ -9,12 +9,12 @@ import javax.persistence.*;
 public class Perro implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Basic
     private String nombre;
     private int edad;
     private String descripcion;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "propietario_id")
     private Propietario propietario;
 
@@ -29,10 +29,12 @@ public class Perro implements Serializable {
     }
 
     public static Perro crearPerro(String nombre, int edad, String descripcion, Propietario propietario) {
-        return new Perro(nombre, edad, descripcion, propietario);
+        Perro p = new Perro(nombre, edad, descripcion, null);
+        if (propietario != null) p.setPropietario(propietario);
+        return p;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -48,7 +50,7 @@ public class Perro implements Serializable {
         return edad;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -68,9 +70,18 @@ public class Perro implements Serializable {
         return propietario;
     }
 
-    public void setPropietario(Propietario propietario) {
-        this.propietario = propietario;
-        propietario.agregarPerro(this);
+    public void setPropietario(Propietario prop) {
+        if (this.propietario == prop) return;
+
+        if (this.propietario != null) {
+            this.propietario.getPerrosInternal().remove(this);
+        }
+
+        this.propietario = prop;
+
+        if (prop != null && !prop.getPerrosInternal().contains(this)) {
+            prop.getPerrosInternal().add(this);
+        }
     }
 
     @Override

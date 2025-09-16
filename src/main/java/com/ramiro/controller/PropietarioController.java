@@ -22,7 +22,7 @@ public class PropietarioController {
         persistencia.crearPropietario(prop);
     }
 
-    public Propietario buscarPropietario(int id) {
+    public Propietario buscarPropietario(Integer id) {
         ValidacionUtils.validarId(id, "ID invalido, debe ser mayor que 0");
         return persistencia.obtenerPropietario(id);
     }
@@ -36,19 +36,18 @@ public class PropietarioController {
         persistencia.editarPropietario(prop);
     }
 
-    public void eliminarPropietario(int id) {
+    public void eliminarPropietario(Integer id) {
         ValidacionUtils.validarId(id, "ID invalido, debe ser mayor que 0");
         persistencia.eliminarPropietario(id);
     }
 
-    // repensar esto
-    public boolean agregarPerro(Perro perro, Propietario prop) {
+    public void agregarPerro(Perro perro, Propietario prop) {
         ValidacionUtils.validarObjeto(perro, "El perro no puede ser nulo");
         ValidacionUtils.validarObjeto(prop, "El propietario no puede ser nulo");
-        return prop.agregarPerro(perro);
+        prop.agregarPerro(perro);
     }
 
-    public Perro buscarPerro(int id, Propietario prop) {
+    public Perro buscarPerro(Integer id, Propietario prop) {
         ValidacionUtils.validarId(id, "ID invalido, debe ser mayor que 0");
         ValidacionUtils.validarObjeto(prop, "Propietario null");
 
@@ -68,7 +67,7 @@ public class PropietarioController {
                 .orElse(null);
     }
 
-    public List<Perro> buscarPerrosPorEdad(int edad, Propietario prop) {
+    public List<Perro> buscarPerrosPorEdad(Integer edad, Propietario prop) {
         // crear validacion para edad
         ValidacionUtils.validarObjeto(prop, "Propietario null");
 
@@ -79,5 +78,9 @@ public class PropietarioController {
 
     public void borrarPropietarios() {
         persistencia.borrarPropietarios();
+    }
+
+    public Propietario buscarPropietarioConPerros(Integer id) {
+        return persistencia.buscarPropietarioConPerros(id);
     }
 }

@@ -2,22 +2,13 @@ package com.ramiro.persistence;
 
 import com.ramiro.model.Propietario;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
 public class PropietarioJpaController implements Serializable {
-    private EntityManagerFactory emf = null;
-
-    public PropietarioJpaController() {
-        this.emf = Persistence.createEntityManagerFactory("AmidogPU");
-    }
-
-    public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+    private EntityManager getEntityManager() {
+        return JpaUtil.getEntityManager();
     }
 
     public void create(Propietario propietario) {
@@ -92,5 +83,18 @@ public class PropietarioJpaController implements Serializable {
         } finally {
             if (em != null) em.close();
         }
+    }
+
+    public Propietario findPropietarioConPerros(int id) {
+        var em = JpaUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            var p = em.createQuery(
+                    "SELECT p FROM Propietario p LEFT JOIN FETCH p.perros WHERE p.id=:id",
+                    Propietario.class
+            ).setParameter("id", id).getResultStream().findFirst().orElse(null);
+            em.getTransaction().commit();
+            return p;
+        } finally { em.close(); }
     }
 }
